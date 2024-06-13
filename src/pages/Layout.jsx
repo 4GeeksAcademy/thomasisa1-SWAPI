@@ -1,15 +1,20 @@
-import { Outlet } from "react-router-dom/dist"
-import ScrollToTop from "../components/ScrollToTop"
-import { Navbar } from "../components/Navbar"
-import { Footer } from "../components/Footer"
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-// Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
-export const Layout = () => {
+const Layout = () => {
     return (
-        <ScrollToTop>
-            <Navbar />
+        <div>
+            <header>
+                <h1>SWAPI Application</h1>
+            </header>
+            <main>
                 <Outlet />
-            <Footer />
-        </ScrollToTop>
-    )
-}
+            </main>
+            <footer>
+                <p>Footer content here</p>
+            </footer>
+        </div>
+    );
+};
+
+export default Layout;
