@@ -1,24 +1,56 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 
-const PlanetList = () => {
+const PlanetList = ({ toggleFavorite }) => {
   const [planets, setPlanets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("https://www.swapi.tech/api/planets")
-      .then((response) => response.json())
-      .then((data) => setPlanets(data.result || []))  // Ensure data.result is an array
-      .catch((error) => console.error(error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(async (data) => {
+        if (data && data.results) {
+          const fetchDetailsPromises = data.results.map((planet) =>
+            fetch(planet.url)
+              .then(response => response.json())
+              .then(detailData => ({
+                uid: planet.uid,
+                name: planet.name,
+                properties: detailData.result.properties,
+                type: 'planets'
+              }))
+          );
+          const detailedPlanets = await Promise.all(fetchDetailsPromises);
+          setPlanets(detailedPlanets);
+        } else {
+          setError("No planets found.");
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Failed to load planets.");
+        setLoading(false);
+      });
   }, []);
 
   return (
     <div className="d-flex overflow-auto">
-      {planets.length > 0 ? (
+      {loading ? (
+        <p>Loading planets...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : planets.length > 0 ? (
         planets.map((planet, index) => (
-          <Card key={index} planet={planet.properties} index={index} />
+          <Card key={index} item={planet} isFavorite={false} toggleFavorite={toggleFavorite} index={index} />
         ))
       ) : (
-        <p>Loading planets...</p>
+        <p>No planets found.</p>
       )}
     </div>
   );

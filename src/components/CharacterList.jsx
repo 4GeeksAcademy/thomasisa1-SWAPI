@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 
-const CharacterList = () => {
+const CharacterList = ({ toggleFavorite }) => {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,26 +14,26 @@ const CharacterList = () => {
         }
         return response.json();
       })
-      .then((data) => {
-        console.log("Fetched data:", data); // Log fetched data
+      .then(async (data) => {
         if (data && data.results) {
-          const fetchDetailsPromises = data.results.map(character =>
+          const fetchDetailsPromises = data.results.map((character) =>
             fetch(character.url)
               .then(response => response.json())
-              .then(detailData => detailData.result.properties)
+              .then(detailData => ({
+                uid: character.uid,
+                name: character.name,
+                properties: detailData.result.properties,
+                type: 'characters'
+              }))
           );
-          return Promise.all(fetchDetailsPromises);
+          const detailedCharacters = await Promise.all(fetchDetailsPromises);
+          setCharacters(detailedCharacters);
         } else {
-          console.error("No results field in data:", data);
           setError("No characters found.");
         }
-      })
-      .then((detailedCharacters) => {
-        setCharacters(detailedCharacters);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Fetch error:", error);
         setError("Failed to load characters.");
         setLoading(false);
       });
@@ -47,7 +47,7 @@ const CharacterList = () => {
         <p>{error}</p>
       ) : characters.length > 0 ? (
         characters.map((character, index) => (
-          <Card key={index} character={character} index={index} />
+          <Card key={index} item={character} isFavorite={false} toggleFavorite={toggleFavorite} index={index} />
         ))
       ) : (
         <p>No characters found.</p>

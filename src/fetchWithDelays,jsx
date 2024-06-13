@@ -1,0 +1,10 @@
+export const fetchWithDelays = (url, delay) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      fetch(url)
+        .then(response => response.json())
+        .then(data => resolve(data))
+        .catch(error => resolve({ error }));
+    }, delay);
+  });
+};
