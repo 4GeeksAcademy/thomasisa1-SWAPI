@@ -15,13 +15,21 @@ const CharacterList = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Fetched data:", data); // Add this line for debugging
+        console.log("Fetched data:", data); // Log fetched data
         if (data && data.results) {
-          setCharacters(data.results);
+          const fetchDetailsPromises = data.results.map(character =>
+            fetch(character.url)
+              .then(response => response.json())
+              .then(detailData => detailData.result.properties)
+          );
+          return Promise.all(fetchDetailsPromises);
         } else {
           console.error("No results field in data:", data);
           setError("No characters found.");
         }
+      })
+      .then((detailedCharacters) => {
+        setCharacters(detailedCharacters);
         setLoading(false);
       })
       .catch((error) => {
@@ -39,7 +47,7 @@ const CharacterList = () => {
         <p>{error}</p>
       ) : characters.length > 0 ? (
         characters.map((character, index) => (
-          <Card key={index} character={character.properties} index={index} />
+          <Card key={index} character={character} index={index} />
         ))
       ) : (
         <p>No characters found.</p>
