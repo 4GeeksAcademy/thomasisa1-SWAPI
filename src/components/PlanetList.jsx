@@ -46,13 +46,12 @@ const PlanetList = ({ toggleFavorite, favorites }) => {
       ) : error ? (
         <p>{error}</p>
       ) : planets.length > 0 ? (
-        planets.map((planet, index) => (
+        planets.map((planet) => (
           <Card 
-            key={index} 
+            key={planet.uid} 
             item={planet} 
-            isFavorite={favorites.some(fav => fav.uid === planet.uid)} 
+            isFavorite={favorites.some(fav => fav.uid === planet.uid && fav.type === planet.type)} 
             toggleFavorite={toggleFavorite} 
-            index={index} 
           />
         ))
       ) : (

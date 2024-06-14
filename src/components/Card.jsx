@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Card = ({ item, index, toggleFavorite, isFavorite }) => {
+const Card = ({ item, toggleFavorite, isFavorite }) => {
   const handleToggleFavs = () => {
     toggleFavorite(item);
   };
@@ -13,7 +13,7 @@ const Card = ({ item, index, toggleFavorite, isFavorite }) => {
     <div className="card px-0 mx-1 mt-2" style={{ flex: '0 0 250px', width: '18rem', backgroundColor: "#2c2f33", color: "#fff" }}>
       {item.type === 'characters' && (
         <img
-          src={`https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg`}
+          src={`https://starwars-visualguide.com/assets/img/characters/${item.uid}.jpg`}
           className="card-img-top"
           alt="Character Image"
           onError={handleImageError}
@@ -21,7 +21,7 @@ const Card = ({ item, index, toggleFavorite, isFavorite }) => {
       )}
       {item.type === 'planets' && (
         <img
-          src={`https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg`}
+          src={`https://starwars-visualguide.com/assets/img/planets/${item.uid}.jpg`}
           className="card-img-top"
           alt="Planet Image"
           onError={handleImageError}
@@ -42,7 +42,7 @@ const Card = ({ item, index, toggleFavorite, isFavorite }) => {
             )}
           </p>
         )}
-        <Link to={`/single/${index + 1}`} className="btn btn-primary">Learn more</Link>
+        <Link to={`/single/${item.uid}`} className="btn btn-primary">Learn more</Link>
         <button className="btn ms-auto" onClick={handleToggleFavs}>
           {isFavorite ? '❤️' : '🤍'}
         </button>

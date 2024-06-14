@@ -46,13 +46,12 @@ const CharacterList = ({ toggleFavorite, favorites }) => {
       ) : error ? (
         <p>{error}</p>
       ) : characters.length > 0 ? (
-        characters.map((character, index) => (
+        characters.map((character) => (
           <Card 
-            key={index} 
+            key={character.uid} 
             item={character} 
-            isFavorite={favorites.some(fav => fav.uid === character.uid)} 
+            isFavorite={favorites.some(fav => fav.uid === character.uid && fav.type === character.type)} 
             toggleFavorite={toggleFavorite} 
-            index={index} 
           />
         ))
       ) : (

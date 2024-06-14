@@ -5,22 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
   const [favorites, setFavorites] = useState([]);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const handleToggleFavorite = (item) => {
-    if (favorites.some(fav => fav.uid === item.uid)) {
-      setFavorites(favorites.filter(fav => fav.uid !== item.uid));
+    if (favorites.some(fav => fav.uid === item.uid && fav.type === item.type)) {
+      setFavorites(favorites.filter(fav => !(fav.uid === item.uid && fav.type === item.type)));
     } else {
       setFavorites([...favorites, item]);
     }
   };
 
-  const handleRemoveFavorite = (uid) => {
-    setFavorites(favorites.filter(fav => fav.uid !== uid));
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
+  const handleRemoveFavorite = (uid, type) => {
+    setFavorites(favorites.filter(fav => !(fav.uid === uid && fav.type === type)));
   };
 
   return (
@@ -32,16 +27,15 @@ const Home = () => {
             type="button" 
             id="favoritesDropdown" 
             data-bs-toggle="dropdown" 
-            aria-expanded="false"
-            onClick={toggleDropdown}>
+            aria-expanded="false">
             Favorites {favorites.length > 0 ? `(${favorites.length})` : ''}
           </button>
-          <ul className={`dropdown-menu ${dropdownVisible ? 'show' : ''}`} aria-labelledby="favoritesDropdown">
+          <ul className="dropdown-menu" aria-labelledby="favoritesDropdown">
             {favorites.length > 0 ? (
               favorites.map((fav, index) => (
                 <li key={index} className="dropdown-item d-flex justify-content-between align-items-center">
                   {fav.name}
-                  <button className="btn btn-danger btn-sm" onClick={() => handleRemoveFavorite(fav.uid)}>Remove</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => handleRemoveFavorite(fav.uid, fav.type)}>Remove</button>
                 </li>
               ))
             ) : (
