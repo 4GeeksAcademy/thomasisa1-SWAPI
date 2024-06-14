@@ -1,39 +1,54 @@
-import { useState } from "react";
 import { Link } from 'react-router-dom';
 
-const Card = ({ item, index, isFavorite, toggleFavorite }) => {
-    const { name, gender, hair_color, eye_color, rotation_period, orbital_period, diameter, model, cost_in_credits, manufacturer } = item.properties;
-    const [isClicked, setIsClicked] = useState(isFavorite);
+const Card = ({ item, index, toggleFavorite, isFavorite }) => {
+  const handleToggleFavs = () => {
+    toggleFavorite(item);
+  };
 
-    const handleToggleFavs = () => {
-        setIsClicked(!isClicked);
-        toggleFavorite(item);
-    };
+  const handleImageError = (event) => {
+    event.target.src = "https://starwars-visualguide.com/assets/img/big-placeholder.jpg";
+  };
 
-    const handleImageError = (event) => {
-        event.target.src = "https://starwars-visualguide.com/assets/img/big-placeholder.jpg";
-    };
-
-    return (
-        <div className="card px-0 mx-1 mt-2" style={{ flex: '0 0 250px', width: '18rem' }}>
-            <img
-                src={`https://starwars-visualguide.com/assets/img/${item.type}/${item.uid}.jpg`}
-                className="card-img-top"
-                alt={`${item.type} Image`}
-                onError={handleImageError}
-            />
-            <div className="card-body">
-                <h5 className="card-title">{name}</h5>
-                {gender && <p>Gender: {gender} | Hair Color: {hair_color} | Eye Color: {eye_color}</p>}
-                {rotation_period && <p>Rotation Period: {rotation_period} | Orbital Period: {orbital_period} | Diameter: {diameter}</p>}
-                {model && <p>Model: {model} | Cost: {cost_in_credits} | Manufacturer: {manufacturer}</p>}
-                <Link to={`/single/${item.uid}`} className="btn btn-primary">Learn more</Link>
-                <button className="btn ms-auto" onClick={handleToggleFavs}>
-                    {isClicked ? '❤️' : '🤍'}
-                </button>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div className="card px-0 mx-1 mt-2" style={{ flex: '0 0 250px', width: '18rem', backgroundColor: "#2c2f33", color: "#fff" }}>
+      {item.type === 'characters' && (
+        <img
+          src={`https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg`}
+          className="card-img-top"
+          alt="Character Image"
+          onError={handleImageError}
+        />
+      )}
+      {item.type === 'planets' && (
+        <img
+          src={`https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg`}
+          className="card-img-top"
+          alt="Planet Image"
+          onError={handleImageError}
+        />
+      )}
+      <div className="card-body">
+        <h5 className="card-title">{item.name}</h5>
+        {item.properties && (
+          <p>
+            {item.type === 'characters' ? (
+              <>
+                Gender: {item.properties.gender} | Hair Color: {item.properties.hair_color} | Eye Color: {item.properties.eye_color}
+              </>
+            ) : (
+              <>
+                Climate: {item.properties.climate} | Population: {item.properties.population}
+              </>
+            )}
+          </p>
+        )}
+        <Link to={`/single/${index + 1}`} className="btn btn-primary">Learn more</Link>
+        <button className="btn ms-auto" onClick={handleToggleFavs}>
+          {isFavorite ? '❤️' : '🤍'}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default Card;

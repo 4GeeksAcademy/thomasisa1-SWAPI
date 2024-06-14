@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 
-const PlanetList = ({ toggleFavorite }) => {
+const PlanetList = ({ toggleFavorite, favorites }) => {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,7 +47,13 @@ const PlanetList = ({ toggleFavorite }) => {
         <p>{error}</p>
       ) : planets.length > 0 ? (
         planets.map((planet, index) => (
-          <Card key={index} item={planet} isFavorite={false} toggleFavorite={toggleFavorite} index={index} />
+          <Card 
+            key={index} 
+            item={planet} 
+            isFavorite={favorites.some(fav => fav.uid === planet.uid)} 
+            toggleFavorite={toggleFavorite} 
+            index={index} 
+          />
         ))
       ) : (
         <p>No planets found.</p>
