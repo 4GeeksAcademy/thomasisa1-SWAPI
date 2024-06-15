@@ -27,17 +27,31 @@ const Card = ({ item, toggleFavorite, isFavorite }) => {
           onError={handleImageError}
         />
       )}
+      {item.type === 'vehicles' && (
+        <img
+          src={`https://starwars-visualguide.com/assets/img/vehicles/${item.uid}.jpg`}
+          className="card-img-top"
+          alt="Vehicle Image"
+          onError={handleImageError}
+        />
+      )}
       <div className="card-body">
         <h5 className="card-title">{item.name}</h5>
         {item.properties && (
           <p>
-            {item.type === 'characters' ? (
+            {item.type === 'characters' && (
               <>
                 Gender: {item.properties.gender} | Hair Color: {item.properties.hair_color} | Eye Color: {item.properties.eye_color}
               </>
-            ) : (
+            )}
+            {item.type === 'planets' && (
               <>
                 Climate: {item.properties.climate} | Population: {item.properties.population}
+              </>
+            )}
+            {item.type === 'vehicles' && (
+              <>
+                Model: {item.properties.model} | Manufacturer: {item.properties.manufacturer}
               </>
             )}
           </p>

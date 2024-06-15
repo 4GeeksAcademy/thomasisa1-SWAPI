@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CharacterList from '../components/CharacterList';
 import PlanetList from '../components/PlanetList';
+import VehicleList from '../components/VehicleList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
@@ -51,6 +52,10 @@ const Home = () => {
       <h1>Star Wars Planets</h1>
       <section>
         <PlanetList toggleFavorite={handleToggleFavorite} favorites={favorites} />
+      </section>
+      <h1>Star Wars Vehicles</h1>
+      <section>
+        <VehicleList toggleFavorite={handleToggleFavorite} favorites={favorites} />
       </section>
     </div>
   );

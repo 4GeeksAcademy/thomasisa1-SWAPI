@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 
-const VehicleList = ({ toggleFavorite }) => {
+const VehicleList = ({ toggleFavorite, favorites }) => {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,7 +45,12 @@ const VehicleList = ({ toggleFavorite }) => {
         <p>{error}</p>
       ) : vehicles.length > 0 ? (
         vehicles.map((vehicle, index) => (
-          <Card key={index} item={vehicle} isFavorite={false} toggleFavorite={toggleFavorite} />
+          <Card 
+            key={index} 
+            item={vehicle} 
+            isFavorite={favorites.some(fav => fav.uid === vehicle.uid && fav.type === vehicle.type)} 
+            toggleFavorite={toggleFavorite} 
+          />
         ))
       ) : (
         <p>No vehicles found.</p>
