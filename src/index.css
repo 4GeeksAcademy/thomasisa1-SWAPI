@@ -4,16 +4,20 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    padding: 0;
+    padding: 0; padding-top:80px
     background-color: #000;
     color: #fff;
 }
 
+.navbar {
+    margin-bottom: 0; /* Ensure no spacing below the navbar */
+  }
 .container {
     width: 80%;
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
+    padding-top: 20px;
 }
 
 .d-flex {
@@ -70,3 +74,8 @@ h1 {
     right: 10px;
     z-index: 1000;
 }
+.footer {
+    padding: 1rem 0;
+    background-color: #f8f9fa;
+    text-align: center;
+  }

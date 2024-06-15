@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
 
 const Navbar = ({ favorites, toggleFavorite }) => {
@@ -7,17 +7,15 @@ const Navbar = ({ favorites, toggleFavorite }) => {
     toggleFavorite(item);
   };
 
-  const location = useLocation();
-
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-light bg-light fixed-top">
       <div className="container-fluid">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">Star Wars API</span>
-        </Link>
-        <Breadcrumbs location={location} />
-        <div className="ml-auto d-flex">
-          <div className="dropdown me-3">
+        <div className="d-flex justify-content-between w-100">
+          <Link to="/">
+            <span className="navbar-brand mb-0 h1">Star Wars API</span>
+          </Link>
+          <Breadcrumbs />
+          <div className="dropdown">
             <button className="btn btn-primary dropdown-toggle" type="button" id="favoritesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               Favorites {favorites.length > 0 ? `(${favorites.length})` : ''}
             </button>

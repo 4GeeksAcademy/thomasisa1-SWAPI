@@ -42,12 +42,6 @@ const Home = () => {
 
   return (
     <div className="container">
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-          <li className="breadcrumb-item active" aria-current="page">{type.charAt(0).toUpperCase() + type.slice(1)}</li>
-        </ol>
-      </nav>
       <h1 className="text-center my-4">{type.charAt(0).toUpperCase() + type.slice(1)}</h1>
       {loading ? (
         <p>Loading {type}...</p>
