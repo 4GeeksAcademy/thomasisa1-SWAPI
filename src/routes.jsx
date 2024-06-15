@@ -1,17 +1,15 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-} from "react-router-dom";
-import Layout from "./pages/Layout";
-import Home from "./pages/Home";
-import Single from "./pages/Single";
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import Layout from './pages/Layout';  // Correct import path
+import Home from './pages/Home';
+import Single from './pages/Single';
+import MainLanding from './components/MainLanding';  // Import the MainLanding component
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-      <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-          <Route path="/" element={<Home />} />
-          <Route path="/single/:theId" element={<Single />} />
-      </Route>
+    <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
+      <Route path="/" element={<MainLanding />} />  {/* Set MainLanding as the default route */}
+      <Route path="/category/:type" element={<Home />} />
+      <Route path="/single/:type/:theId" element={<Single />} />
+    </Route>
   )
 );
