@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useOutletContext } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Card from '../components/Card';
+import useGlobalReducer from '../hooks/useGlobalReducer';
 
 const Home = () => {
   const { type } = useParams();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { favorites, toggleFavorite } = useOutletContext();
+
+  const { store, dispatch } = useGlobalReducer();
+  const favorites = store?.favorites ?? [];  // Ensure favorites is always an array
+
+  const toggleFavorite = (item) => {
+    console.log('Toggling favorite for item:', item); // Log the item being toggled
+    const isFavorite = favorites.some(fav => fav.uid === item.uid && fav.type === item.type);
+    dispatch({ type: isFavorite ? 'REMOVE_FAVORITE' : 'ADD_FAVORITE', payload: item });
+  };
 
   useEffect(() => {
     fetch(`https://www.swapi.tech/api/${type}`)
@@ -50,7 +59,12 @@ const Home = () => {
       ) : items.length > 0 ? (
         <div className="d-flex flex-wrap">
           {items.map((item, index) => (
-            <Card key={index} item={item} toggleFavorite={toggleFavorite} isFavorite={favorites.some(fav => fav.uid === item.uid && fav.type === item.type)} />
+            <Card
+              key={index}
+              item={item}
+              toggleFavorite={toggleFavorite}
+              isFavorite={favorites.some(fav => fav.uid === item.uid && fav.type === item.type)}
+            />
           ))}
         </div>
       ) : (

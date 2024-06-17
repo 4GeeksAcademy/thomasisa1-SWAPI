@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';  // Import the Navbar component
+import useGlobalReducer from '../hooks/useGlobalReducer';  // Import the global state hook
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Layout = () => {
-  const [favorites, setFavorites] = useState([]);
+  const { store, dispatch } = useGlobalReducer();  // Use global state hook
+  const favorites = store.favorites;
 
   const toggleFavorite = (item) => {
     if (favorites.some(fav => fav.uid === item.uid && fav.type === item.type)) {
-      setFavorites(favorites.filter(fav => !(fav.uid === item.uid && fav.type === item.type)));
+      dispatch({ type: 'REMOVE_FAVORITE', payload: item });
     } else {
-      setFavorites([...favorites, item]);
+      dispatch({ type: 'ADD_FAVORITE', payload: item });
     }
   };
 

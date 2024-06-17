@@ -1,32 +1,28 @@
-export const initialStore=()=>{
-  return{
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
-  }
-}
+export const initialStore = () => ({
+  message: null,
+  favorites: [],  // Ensure favorites is initialized as an empty array
+});
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'add_task':
+  console.log('Reducer called with action:', action); // Log the action
 
-      const { id,  color } = action.payload
-
-      return {
+  switch (action.type) {
+    case 'ADD_FAVORITE':
+      const newStateAdd = {
         ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
+        favorites: [...store.favorites, action.payload],
       };
+      console.log('State after ADD_FAVORITE:', newStateAdd); // Log new state
+      return newStateAdd;
+    case 'REMOVE_FAVORITE':
+      const newStateRemove = {
+        ...store,
+        favorites: store.favorites.filter(fav => fav.uid !== action.payload.uid),
+      };
+      console.log('State after REMOVE_FAVORITE:', newStateRemove); // Log new state
+      return newStateRemove;
     default:
-      throw Error('Unknown action.');
-  }    
+      console.error(`Unknown action: ${action.type}`);
+      return store;
+  }
 }

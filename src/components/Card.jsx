@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Card = ({ item, toggleFavorite, isFavorite }) => {
   const handleToggleFavs = () => {
+    console.log('Favorite button clicked for item:', item); // Log item
     toggleFavorite(item);
   };
 
