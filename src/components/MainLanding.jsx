@@ -10,7 +10,7 @@ const MainLanding = () => {
         <div className="col-12 col-md-4">
           <Link to="/category/people">
             <div className="card mb-4">
-              <img src="https://starwars-visualguide.com/assets/img/big-placeholder.jpg" className="card-img-top" alt="Characters" />
+              <img src="https://starwars-visualguide.com/assets/img/categories/character.jpg" className="card-img-top" alt="Characters" />
               <div className="card-body">
                 <h5 className="card-title">Characters</h5>
               </div>
@@ -20,7 +20,7 @@ const MainLanding = () => {
         <div className="col-12 col-md-4">
           <Link to="/category/planets">
             <div className="card mb-4">
-              <img src="https://starwars-visualguide.com/assets/img/big-placeholder.jpg" className="card-img-top" alt="Planets" />
+              <img src="https://starwars-visualguide.com/assets/img/categories/planets.jpg" className="card-img-top" alt="Planets" />
               <div className="card-body">
                 <h5 className="card-title">Planets</h5>
               </div>
@@ -30,7 +30,7 @@ const MainLanding = () => {
         <div className="col-12 col-md-4">
           <Link to="/category/vehicles">
             <div className="card mb-4">
-              <img src="https://starwars-visualguide.com/assets/img/big-placeholder.jpg" className="card-img-top" alt="Vehicles" />
+              <img src="https://starwars-visualguide.com/assets/img/categories/vehicles.jpg" className="card-img-top" alt="Vehicles" />
               <div className="card-body">
                 <h5 className="card-title">Vehicles</h5>
               </div>

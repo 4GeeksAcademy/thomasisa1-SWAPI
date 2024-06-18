@@ -7,11 +7,8 @@ import MainLanding from './components/MainLanding';  // Import the MainLanding c
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-      {/* Default route set to MainLanding component */}
       <Route path="/" element={<MainLanding />} />  
-      {/* Route for displaying a category of items */}
       <Route path="/category/:type" element={<Home />} />
-      {/* Route for displaying a single item details */}
       <Route path="/single/:type/:theId" element={<Single />} />
     </Route>
   )

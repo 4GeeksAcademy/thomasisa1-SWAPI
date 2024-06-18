@@ -1,11 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';  // Import the Navbar component
-import useGlobalReducer from '../hooks/useGlobalReducer';  // Import the global state hook
+import Navbar from '../components/Navbar';
+import Breadcrumbs from '../components/Breadcrumbs'; // Import the Breadcrumbs component
+import useGlobalReducer from '../hooks/useGlobalReducer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Layout = () => {
-  const { store, dispatch } = useGlobalReducer();  // Use global state hook
+  const { store, dispatch } = useGlobalReducer();
   const favorites = store.favorites;
 
   const toggleFavorite = (item) => {
@@ -19,6 +20,7 @@ const Layout = () => {
   return (
     <div>
       <Navbar favorites={favorites} toggleFavorite={toggleFavorite} />
+      <Breadcrumbs /> {/* Add Breadcrumbs component here */}
       <main className="container my-4">
         <Outlet context={{ favorites, toggleFavorite }} />
       </main>

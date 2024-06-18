@@ -7,7 +7,7 @@ const Breadcrumbs = () => {
 
   const translateSegment = (segment, index) => {
     if (index === 0 && segment === 'category') {
-      return 'People';
+      return 'People';  // Assuming category is people for simplicity
     } else if (index === 0 && segment === 'single') {
       return pathnames[1] === 'people' ? 'People' : pathnames[1] === 'planets' ? 'Planets' : 'Vehicles';
     } else if (!isNaN(segment)) {
@@ -24,7 +24,19 @@ const Breadcrumbs = () => {
           <Link to="/">Home</Link>
         </li>
         {pathnames.map((value, index) => {
-          const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+          // Special case for navigating back to the category page from a single item page
+          let to;
+          if (index === 0 && value === 'single') {
+            to = `/category/${pathnames[1]}`;
+          } else {
+            to = `/${pathnames.slice(0, index + 1).join('/')}`;
+          }
+
+          // Skip the second segment if the first segment is 'category' or 'single'
+          if (index === 1 && (pathnames[0] === 'category' || pathnames[0] === 'single')) {
+            return null;
+          }
+
           const isLast = index === pathnames.length - 1;
           return isLast ? (
             <li key={to} className="breadcrumb-item active" aria-current="page">
